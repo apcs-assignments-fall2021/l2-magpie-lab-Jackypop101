@@ -42,6 +42,32 @@ public class Magpie
         {
             response = "Tell me more about your family.";
         }
+        else if (statement.indexOf("cat") >= 0
+            || statement.indexOf("dog") >= 0)
+        {
+            response = "Tell me more about your pets.";
+        }
+        else if (statement.indexOf("Mr.") >= 0
+                || statement.indexOf("Ms.") >= 0
+                || statement.indexOf("Mrs.") >= 0)
+        {
+            response = "They sound like a good teacher";
+        }
+        else if(statement.trim().length() == 0){
+            response = "Say something, please.";
+        }
+        else if (statement.indexOf("hair") >= 0)
+        {
+            response = "What do you think about Jack's hair today?";
+        }
+        else if (statement.indexOf("stress") >= 0)
+        {
+            response = "Stress is a social construct";
+        }
+        else if (statement.indexOf("happy") >= 0)
+        {
+            response = "Happiness is a virtue";
+        }
         else
         {
             response = getRandomResponse();
@@ -55,7 +81,7 @@ public class Magpie
      */
     public String getRandomResponse()
     {
-        final int NUMBER_OF_RESPONSES = 4;
+        final int NUMBER_OF_RESPONSES = 6;
         double r = Math.random();
         int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
         String response = "";
@@ -76,7 +102,14 @@ public class Magpie
         {
             response = "You don't say.";
         }
-    
+        else if (whichResponse == 4)
+        {
+            response = "Fascinating!";
+        }
+        else if (whichResponse == 5)
+        {
+            response = "Some people like that";
+        }
         return response;
     }
 
@@ -90,7 +123,31 @@ public class Magpie
     // The method returns the index of the first character in word
     // if it is found, and returns -1 otherwise. 
     public int findWord(String str, String word) {
-        return -1;
+        char j = Character.toUpperCase(word.charAt(0));
+        char g = Character.toLowerCase(word.charAt(0));
+        String x = j + word.substring(1, word.length()-1);
+        String y = g + word.substring(1, word.length()-1);
+        String word1 = " " + x + " ";
+        String word1y = " " + y + " ";
+        String word2 = x + " ";
+        String word2y = y + " ";
+        String word3 = " " + x;
+        String word3y = " " + y;
+        if (str.indexOf(word1) >= 0 || str.indexOf(word1y) >= 0)
+        {
+            return str.indexOf(word1) + 1;
+        }
+        else if (str.indexOf(word2) == 0 || str.indexOf(word2y) == 0)
+        {
+            return str.indexOf(word2);
+        }
+        else if (str.indexOf(word3) == str.length()-word.length() || str.indexOf(word3y) == str.length()-word.length())
+        {
+            return str.indexOf(word3) + 1;
+        }
+        else{
+            return -1;
+        }
     }
 
     
