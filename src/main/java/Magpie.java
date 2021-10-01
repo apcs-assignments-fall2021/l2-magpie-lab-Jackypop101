@@ -68,6 +68,9 @@ public class Magpie
         {
             response = "Happiness is a virtue";
         }
+        else if (statement.substring(0, 6) == "I want " ){
+            response = transformIWantStatement(statement);
+        }
         else
         {
             response = getRandomResponse();
@@ -110,6 +113,7 @@ public class Magpie
         {
             response = "Some people like that";
         }
+
         return response;
     }
 
@@ -161,8 +165,8 @@ public class Magpie
      */
     public String transformIWantStatement(String statement)
     {
-        //your code here
-        return "";
+        String x = statement.substring(7, statement.length()-1);
+        return "Would you really be happy if you had " + x;
     }
 
     /**
