@@ -1,3 +1,5 @@
+import java.util.Locale;
+
 /**
  * A program to carry on conversations with a human user.
  * This is the initial version that:  
@@ -31,44 +33,44 @@ public class Magpie
     public String getResponse(String statement)
     {
         String response = "";
-        if (statement.indexOf("no") >= 0)
+        if (findWord(statement,"no") >= 0)
         {
             response = "Why so negative?";
         }
-        else if (statement.indexOf("mother") >= 0
-                || statement.indexOf("father") >= 0
-                || statement.indexOf("sister") >= 0
-                || statement.indexOf("brother") >= 0)
+        else if (findWord(statement, "mother") >= 0
+                || findWord(statement, "father") >= 0
+                || findWord(statement, "sister") >= 0
+                || findWord(statement, "brother") >= 0)
         {
             response = "Tell me more about your family.";
         }
-        else if (statement.indexOf("cat") >= 0
-            || statement.indexOf("dog") >= 0)
+        else if (findWord(statement,"cat") >= 0
+            || findWord(statement,"dog") >= 0)
         {
             response = "Tell me more about your pets.";
         }
-        else if (statement.indexOf("Mr.") >= 0
-                || statement.indexOf("Ms.") >= 0
-                || statement.indexOf("Mrs.") >= 0)
+        else if (findWord(statement, "Mr.") >= 0
+                || findWord(statement, "Ms.") >= 0
+                || findWord(statement, "Mrs.") >= 0)
         {
             response = "They sound like a good teacher";
         }
         else if(statement.trim().length() == 0){
             response = "Say something, please.";
         }
-        else if (statement.indexOf("hair") >= 0)
+        else if (findWord(statement,"hair") >= 0)
         {
             response = "What do you think about Jack's hair today?";
         }
-        else if (statement.indexOf("stress") >= 0)
+        else if (findWord(statement, "stress") >= 0)
         {
             response = "Stress is a social construct";
         }
-        else if (statement.indexOf("happy") >= 0)
+        else if (findWord(statement,"happy") >= 0)
         {
             response = "Happiness is a virtue";
         }
-        else if (statement.substring(0, 6) == "I want " ){
+        else if ((findWord(statement,"I want"))>= 0){
             response = transformIWantStatement(statement);
         }
         else
@@ -127,29 +129,28 @@ public class Magpie
     // The method returns the index of the first character in word
     // if it is found, and returns -1 otherwise. 
     public int findWord(String str, String word) {
-        char j = Character.toUpperCase(word.charAt(0));
-        char g = Character.toLowerCase(word.charAt(0));
-        String x = j + word.substring(1, word.length()-1);
-        String y = g + word.substring(1, word.length()-1);
+//        char j = Character.toUpperCase(word.charAt(0));
+//        char g = Character.toLowerCase(word.charAt(0));
+//        String x = j + word.substring(1, word.length()-1);
+//        String y = g + word.substring(1, word.length()-1);
+        str = str.toLowerCase();
+        String x = word.toLowerCase();
         String word1 = " " + x + " ";
-        String word1y = " " + y + " ";
         String word2 = x + " ";
-        String word2y = y + " ";
         String word3 = " " + x;
-        String word3y = " " + y;
-        if (str.indexOf(word1) >= 0 || str.indexOf(word1y) >= 0)
-        {
-            return str.indexOf(word1) + 1;
+
+        if ((str.indexOf(word))>= 0) {
+            if (str.indexOf(word1) >= 0) {
+                return str.indexOf(word1) + 1;
+            } else if (str.indexOf(word2) == 0) {
+                return str.indexOf(word2);
+            } else if (str.indexOf(word3) == str.length() - word.length() - 1) {
+                return str.indexOf(word3) + 1;
+            } else {
+                return -1;
+            }
         }
-        else if (str.indexOf(word2) == 0 || str.indexOf(word2y) == 0)
-        {
-            return str.indexOf(word2);
-        }
-        else if (str.indexOf(word3) == str.length()-word.length() || str.indexOf(word3y) == str.length()-word.length())
-        {
-            return str.indexOf(word3) + 1;
-        }
-        else{
+        else {
             return -1;
         }
     }
@@ -165,8 +166,9 @@ public class Magpie
      */
     public String transformIWantStatement(String statement)
     {
-        String x = statement.substring(7, statement.length()-1);
-        return "Would you really be happy if you had " + x;
+        int j = findWord(statement, "I want");
+        String x = statement.substring(j + 8, statement.length());
+        return "Would you really be happy if you had " + x + "?";
     }
 
     /**
@@ -177,8 +179,10 @@ public class Magpie
      */
     public String transformIYouStatement(String statement)
     {
-        //your code here
-        return "";
+        int j = findWord(statement, "I");
+        int a = findWord(statement, "you");
+        String x = statement.substring(j + 3,a);
+        return "Why do you " + x + "me?";
     }
 
     /**
