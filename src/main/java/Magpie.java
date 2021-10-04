@@ -20,7 +20,7 @@ public class Magpie
      */
     public String getGreeting()
     {
-        return "Hello, let's talk.";
+        return "How is it going my brother from another mother?";
     }
     
     /**
@@ -70,8 +70,62 @@ public class Magpie
         {
             response = "Happiness is a virtue";
         }
-        else if ((findWord(statement,"I want"))>= 0){
+        else if (findWord(statement, "pickup line") >= 0){
+            final int NUMBER_OF_RESPONSES = 6;
+            double r = Math.random();
+            int whichResponse = (int)(r * NUMBER_OF_RESPONSES);
+
+            if (whichResponse == 0)
+            {
+                System.out.println("Something’s wrong with my eyes because I can’t take them off you.");
+
+            }
+            else if (whichResponse == 1)
+            {
+                System.out.println("If I could rearrange the alphabet, I’d put ‘U’ and ‘I’ together.");
+            }
+            else if (whichResponse == 2)
+            {
+                System.out.println("I'm no photographer, but I can picture us together.");
+            }
+            else if (whichResponse == 3)
+            {
+                System.out.println("If you were a Transformer… you’d be Optimus Fine.");
+            }
+            else if (whichResponse == 4)
+            {
+                System.out.println("Hey, my name's Microsoft. Can I crash at your place tonight?");
+            }
+            else if (whichResponse == 5)
+            {
+                System.out.println("There is something wrong with my cell phone. It doesn't have your number in it.");
+            }
+        }
+        else if (findWord(statement, "thank you") >= 0){
+            System.out.println("My pleasure");
+        }
+        else if (findWord(statement, "hi") >= 0 || findWord(statement, "hello") >= 0 ){
+            System.out.println("Hola");
+        }
+        else if (findWord(statement, "hate") >= 0){
+            response = transformIHatestatement(statement);
+        }
+        else if (findWord(statement,"want") >= 0){
             response = transformIWantStatement(statement);
+        }
+        else if (findWord(statement,"want to") >= 0){
+            response = transformIWantStatement(statement);
+        }
+        else if (findWord(statement, "you")>=0){
+            if ((findWord(statement, "me"))>(findWord(statement, "you"))){
+                response = transformYouMeStatement(statement);
+            }
+            else if (findWord(statement, "I")<(findWord(statement, "you"))) {
+                response = transformIYouStatement(statement);
+            }
+            else{
+                response = getRandomResponse();
+            }
         }
         else
         {
@@ -168,7 +222,8 @@ public class Magpie
     {
         int j = findWord(statement, "I want");
         String x = statement.substring(j + 8, statement.length());
-        return "Would you really be happy if you had " + x + "?";
+        String o = "Would you really be happy if you had " + x + "?";
+        return o;
     }
 
     /**
@@ -182,7 +237,8 @@ public class Magpie
         int j = findWord(statement, "I");
         int a = findWord(statement, "you");
         String x = statement.substring(j + 3,a);
-        return "Why do you " + x + "me?";
+        String o = "Why do you " + x + "me?";
+        return o;
     }
 
     /**
@@ -193,8 +249,10 @@ public class Magpie
      */
     public String transformIWantToStatement(String statement)
     {
-        // your code here
-        return "";
+        int j = findWord(statement, "I want to");
+        String x = statement.substring(j + 11, statement.length());
+        String o = "What would it mean to " + x + "?";
+        return o;
     }
 
 
@@ -208,7 +266,18 @@ public class Magpie
      */
     public String transformYouMeStatement(String statement)
     {
-        // your code here
-        return "";
+        int j = findWord(statement, "you");
+        int a = findWord(statement, "me");
+        String x = statement.substring(j + 4,a);
+        String o = "What makes you think that I " + x + "you?";
+        return o;
     }
+    public String transformIHatestatement(String statement){
+        int j = findWord(statement, "I hate");
+        String x = statement.substring(j + 8, statement.length());
+        String o = "Why do you hate " + x + "?";
+        return o;
+    }
+
+
 }
